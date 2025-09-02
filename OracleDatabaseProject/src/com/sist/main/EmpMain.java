@@ -37,6 +37,30 @@ public class EmpMain {
         			);
         		}
         	}
+        	else if(menu==3)
+        	{
+        		System.out.print("검색할 사원이름 입력:");
+        		String ename=scan.next();
+        		List<EmpVO> list=dao.empFindData(ename);
+        		for(EmpVO vo:list)
+        		{
+        			System.out.println(
+        			  vo.getEmpno()+" "
+        			  +vo.getEname()+" "
+        			  +vo.getJob()+" "
+        			  +vo.getDbday()+" "
+        			  +vo.getSal()
+        			);
+        		}
+        	}
+        	else if(menu==2)
+        	{
+        		EmpVO vo=dao.empDetailData(7900);
+        		System.out.println("사번:"+vo.getEmpno());
+        		System.out.println("이름:"+vo.getEname());
+        		System.out.println("직위:"+vo.getJob());
+        		System.out.println("입사일:"+vo.getHiredate());
+        	}
         }
 	}
 
