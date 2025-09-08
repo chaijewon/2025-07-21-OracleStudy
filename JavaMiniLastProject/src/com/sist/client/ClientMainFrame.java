@@ -8,6 +8,7 @@ implements ActionListener
 	MenuForm menu=new MenuForm();
 	ControllerPanel cp=new ControllerPanel();
 	Login login=new Login();
+	Join join=new Join();
 	// has-a => 포함 클래스 
     public ClientMainFrame()
     {
@@ -23,6 +24,12 @@ implements ActionListener
     	menu.b5.addActionListener(this);
     	menu.b6.addActionListener(this);
     	
+    	login.b1.addActionListener(this); // 로그인 
+    	login.b2.addActionListener(this); // 회원가입 
+    	login.b3.addActionListener(this); // 취소
+    	
+    	join.b1.addActionListener(this); // 회원가입 
+    	join.b2.addActionListener(this); // 취소 
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -49,6 +56,25 @@ implements ActionListener
 		else if(e.getSource()==menu.b6)
 		{
 			cp.card.show(cp, "BF");
+		}
+		else if(e.getSource()==login.b2)
+		{
+			login.setVisible(false);
+			join.setVisible(true);
+		}
+		else if(e.getSource()==login.b3)
+		{
+			dispose();
+			System.exit(0);
+		}
+		else if(e.getSource()==join.b1)
+		{
+			
+		}
+		else if(e.getSource()==join.b2)
+		{
+			login.setVisible(true);
+			join.setVisible(false);
 		}
 	}
 
