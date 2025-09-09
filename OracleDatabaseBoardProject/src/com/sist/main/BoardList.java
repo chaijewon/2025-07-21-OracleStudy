@@ -142,6 +142,14 @@ public class BoardList extends JPanel implements ActionListener{
 				print();
 			}
 		}
+		else if(e.getSource()==b1)
+		{
+			bm.card.show(bm.getContentPane(), "insert");
+			bm.bInsert.tf1.setText("");
+			bm.bInsert.tf2.setText("");
+			bm.bInsert.ta.setText("");
+			bm.bInsert.pf.setText("");
+		}
 	}
     
 }

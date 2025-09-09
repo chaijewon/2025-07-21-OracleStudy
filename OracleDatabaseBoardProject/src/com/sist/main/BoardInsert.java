@@ -2,7 +2,10 @@ package com.sist.main;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-public class BoardInsert extends JPanel{
+
+import com.sist.dao.BoardDAO;
+import com.sist.vo.BoardVO;
+public class BoardInsert extends JPanel implements ActionListener{
      JLabel la1,la2,la3,la4,la5;
      JTextField tf1,tf2;
      JTextArea ta;
@@ -54,5 +57,63 @@ public class BoardInsert extends JPanel{
     	 p.add(b1);p.add(b2);
     	 p.setBounds(30, 340,435 , 35);
     	 add(p);
+    	 
+    	 b1.addActionListener(this);
+    	 b2.addActionListener(this);
+    	 
      }
+	 @Override
+	 public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==b1)
+		{
+			String name=tf1.getText();
+			if(name.trim().length()<1)
+			{
+				JOptionPane.showMessageDialog(this, "이름을 입력하세요");
+				tf1.requestFocus();
+				return;
+			}
+			
+			String subject=tf2.getText();
+			if(subject.trim().length()<1)
+			{
+				JOptionPane.showMessageDialog(this, "제목을 입력하세요");
+				tf2.requestFocus();
+				return;
+			}
+			
+			String content=ta.getText();
+			if(content.trim().length()<1)
+			{
+				JOptionPane.showMessageDialog(this, "내용을 입력하세요");
+				ta.requestFocus();
+				return;
+			}
+			
+			String pwd=String.valueOf(pf.getPassword());
+			if(pwd.trim().length()<1)
+			{
+				JOptionPane.showMessageDialog(this, "비밀번호를 입력하세요");
+				pf.requestFocus();
+				return;
+			}
+			
+			BoardVO vo=new BoardVO();
+			vo.setName(name);
+			vo.setContent(content);
+			vo.setSubject(subject);
+			vo.setPwd(pwd);
+			
+			BoardDAO dao=BoardDAO.newInstance();
+			dao.boardInsert(vo);
+			
+			bm.card.show(bm.getContentPane(), "list");
+			bm.bList.print();
+		}
+		else if(e.getSource()==b2)
+		{
+			bm.card.show(bm.getContentPane(), "list");
+		}
+	 }
 }

@@ -12,8 +12,9 @@ public class BoardMainFrame extends JFrame{
     	bList=new BoardList(this);
     	bInsert=new BoardInsert(this);
     	setLayout(card);
-    	add("insert",bInsert);
     	add("list",bList);
+    	add("insert",bInsert);
+    	
     	
     	setSize(640, 570);
     	setVisible(true);
