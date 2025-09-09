@@ -78,7 +78,7 @@ public class BoardDAO {
 		   int start=(rowSize*page)-(rowSize-1); // 1 11 21
 		   int end=rowSize*page;//10 20 30
 		   ps.setInt(1, start);
-		   ps.setInt(1, end);
+		   ps.setInt(2, end);
 		   // 5. 결과값을 읽어 온다 
 		   ResultSet rs=ps.executeQuery();
 		   /*

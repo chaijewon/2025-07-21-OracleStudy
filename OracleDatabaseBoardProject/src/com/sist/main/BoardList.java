@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
+import java.util.List;
+import com.sist.dao.BoardDAO;
+import com.sist.vo.BoardVO;
 public class BoardList extends JPanel{
     JLabel la1,la2;
     JTable table;
@@ -10,6 +13,9 @@ public class BoardList extends JPanel{
     JButton b1,b2,b3;
     private BoardMainFrame bm;
     TableColumn column;
+    // 현재페이지 / 총페이지 
+    int curpage=1;
+    int totalpage=0;
     public BoardList(BoardMainFrame bm)
     {
     	this.bm=bm;
@@ -63,6 +69,7 @@ public class BoardList extends JPanel{
     			column.setPreferredWidth(50);
     			rend.setHorizontalAlignment(JLabel.CENTER);
     		}
+    		column.setCellRenderer(rend);
     	}
     	table.getTableHeader().setReorderingAllowed(false);
     	table.getTableHeader().setResizingAllowed(false);
@@ -80,6 +87,37 @@ public class BoardList extends JPanel{
     	p.add(b2);p.add(la2);p.add(b3);
     	p.setBounds(30, 470, 580, 35);
     	add(p);
+    	print();
+    }
+    // 데이터 출력 
+    public void print()
+    {
+    	//1. 테이블을 초기화 
+    	for(int i=model.getRowCount()-1;i>=0;i--)
+    	{
+    		model.removeRow(i);
+    	}
+    	//2. 데이터베이스값 
+    	BoardDAO dao=BoardDAO.newInstance();
+    	List<BoardVO> list=dao.boardListData(curpage);
+    	int count=dao.boardRowCount();
+    	totalpage=(int)(Math.ceil(count/10.0));
+    	count=count-((curpage*10)-10); 
+    	
+    	for(BoardVO vo:list)
+    	{
+    		String[] data= {
+    			String.valueOf(count),
+    			vo.getSubject(),
+    			vo.getName(),
+    			vo.getDbday(),
+    			String.valueOf(vo.getHit())
+    		};
+    		model.addRow(data);
+    		count--;
+    	}
+    	la2.setText(curpage +" page / "+totalpage+" pages");
+    	
     }
     
 }
