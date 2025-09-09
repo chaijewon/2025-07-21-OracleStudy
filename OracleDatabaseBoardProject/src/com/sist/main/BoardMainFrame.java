@@ -6,11 +6,15 @@ import javax.swing.*;
 public class BoardMainFrame extends JFrame{
     CardLayout card=new CardLayout();
     BoardList bList;
+    BoardInsert bInsert;
     public BoardMainFrame()
     {
     	bList=new BoardList(this);
+    	bInsert=new BoardInsert(this);
     	setLayout(card);
+    	add("insert",bInsert);
     	add("list",bList);
+    	
     	setSize(640, 570);
     	setVisible(true);
     	setDefaultCloseOperation(EXIT_ON_CLOSE);
