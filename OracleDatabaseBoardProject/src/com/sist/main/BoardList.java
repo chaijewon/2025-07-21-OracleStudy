@@ -6,7 +6,7 @@ import javax.swing.table.*;
 import java.util.List;
 import com.sist.dao.BoardDAO;
 import com.sist.vo.BoardVO;
-public class BoardList extends JPanel{
+public class BoardList extends JPanel implements ActionListener{
     JLabel la1,la2;
     JTable table;
     DefaultTableModel model;
@@ -88,6 +88,10 @@ public class BoardList extends JPanel{
     	p.setBounds(30, 470, 580, 35);
     	add(p);
     	print();
+    	
+    	b1.addActionListener(this);
+    	b2.addActionListener(this);
+    	b3.addActionListener(this);
     }
     // 데이터 출력 
     public void print()
@@ -119,5 +123,25 @@ public class BoardList extends JPanel{
     	la2.setText(curpage +" page / "+totalpage+" pages");
     	
     }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==b2)// 이전
+		{
+			if(curpage>1)
+			{
+				curpage--;
+				print();
+			}
+		}
+		else if(e.getSource()==b3) //다음
+		{
+			if(curpage<totalpage)
+			{
+				curpage++;
+				print();
+			}
+		}
+	}
     
 }
