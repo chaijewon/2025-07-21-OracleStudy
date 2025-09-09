@@ -1,8 +1,12 @@
 package com.sist.main;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
+
 import javax.swing.*;
 import javax.swing.table.*;
+
+import java.util.Date;
 import java.util.List;
 import com.sist.dao.BoardDAO;
 import com.sist.vo.BoardVO;
@@ -107,12 +111,17 @@ public class BoardList extends JPanel implements ActionListener{
     	int count=dao.boardRowCount();
     	totalpage=(int)(Math.ceil(count/10.0));
     	count=count-((curpage*10)-10); 
-    	
+        String today=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     	for(BoardVO vo:list)
     	{
+    		String ss="<html><body>"+vo.getSubject()+"</body></html>";
+    		if(vo.getDbday().equals(today))
+    		{
+    			ss="<html><body>"+vo.getSubject()+"&nbsp;<sup><font color=red>new</font></sub></body></html>";
+    		}
     		String[] data= {
     			String.valueOf(count),
-    			vo.getSubject(),
+    			ss,
     			vo.getName(),
     			vo.getDbday(),
     			String.valueOf(vo.getHit())
