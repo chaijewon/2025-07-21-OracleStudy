@@ -126,6 +126,10 @@ public class BoardDetail extends JPanel implements ActionListener{
 			if(bCheck==true)// 삭제
 			{
 				bm.card.show(bm.getContentPane(), "list");
+				pf.setText("");
+				pan.setVisible(false);
+				bCheck=true;
+				b2.setText("삭제");
 				bm.bList.print();
 			}
 			else // 비밀번호가 틀리다
@@ -134,6 +138,12 @@ public class BoardDetail extends JPanel implements ActionListener{
 				pf.setText("");
 				pf.requestFocus();
 			}
+		}
+		else if(e.getSource()==b1)// 수정
+		{
+			String no=la_p1.getText();
+			bm.card.show(bm.getContentPane(), "update");
+			bm.bUpdate.print(Integer.parseInt(no));
 		}
 	 }
 	 public void print(int no)
