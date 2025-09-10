@@ -64,8 +64,10 @@ implements ActionListener
 		}
 		else if(e.getSource()==login.b3)
 		{
-			dispose();
-			System.exit(0);
+			//dispose();
+			//System.exit(0);
+			setVisible(true);
+			login.setVisible(false);
 		}
 		else if(e.getSource()==join.b1)
 		{
