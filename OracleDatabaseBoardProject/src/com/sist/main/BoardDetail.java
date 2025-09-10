@@ -30,7 +30,7 @@ public class BoardDetail extends JPanel implements ActionListener{
     	 la_p2=new JLabel("",JLabel.CENTER);
     	 la_p3=new JLabel("",JLabel.CENTER);
     	 la_p4=new JLabel("",JLabel.CENTER);
-    	 la_p5=new JLabel("",JLabel.CENTER);
+    	 la_p5=new JLabel("");
     	 ta=new JTextArea();
     	 JScrollPane js=new JScrollPane(ta);
     	 ta.setEnabled(false);
@@ -143,7 +143,9 @@ public class BoardDetail extends JPanel implements ActionListener{
 		{
 			String no=la_p1.getText();
 			bm.card.show(bm.getContentPane(), "update");
+			bm.bUpdate.pf.setText("");
 			bm.bUpdate.print(Integer.parseInt(no));
+			
 		}
 	 }
 	 public void print(int no)

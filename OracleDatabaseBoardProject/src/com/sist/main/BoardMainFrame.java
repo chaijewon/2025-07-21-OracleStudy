@@ -27,6 +27,11 @@ public class BoardMainFrame extends JFrame{
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		try
+		{
+			//                                         hifi  HiFiLook~
+			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+		}catch(Exception e) {}
         new BoardMainFrame();
 	}
 
