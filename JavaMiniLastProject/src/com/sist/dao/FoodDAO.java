@@ -120,6 +120,39 @@ public class FoodDAO {
 		   }
 		   return total;
 	   }
+	   // => 인기 많은 맛집 10개 추출 
+	   public List<FoodVO> foodTop10()
+	   {
+		   List<FoodVO> list=new ArrayList<FoodVO>();
+		   try
+		   {
+			   getConnection();
+			   String sql="SELECT fno,name,SUBSTR(address,1,2),poster,rownum "
+					     +"FROM (SELECT fno,name,address,poster "
+					     +"FROM menupan_food ORDER BY hit DESC) "
+					     +"WHERE rownum<=10";
+			   ps=conn.prepareStatement(sql);
+			   ResultSet rs=ps.executeQuery();
+			   while(rs.next())
+			   {
+				   FoodVO vo=new FoodVO();
+				   vo.setFno(rs.getInt(1));
+				   vo.setName(rs.getString(2));
+				   vo.setAddress(rs.getString(3));
+				   vo.setPoster(rs.getString(4));
+				   list.add(vo);
+			   }
+			   rs.close();
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
+		   return list;
+	   }
 	   // = 상세보기 
 	   // = 검색 
 	   
