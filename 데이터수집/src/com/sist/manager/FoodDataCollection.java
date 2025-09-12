@@ -5,6 +5,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.sist.dao.FoodDAO;
+import com.sist.vo.FoodVO;
+
 public class FoodDataCollection {
    
 	// food 수집
@@ -16,6 +19,7 @@ public class FoodDataCollection {
 	{
 		try
 		{
+			FoodDAO dao=FoodDAO.newInstance();
 			for(int i=1;i<=346;i++)
 			{
 				Document doc=Jsoup.connect("https://www.menupan.com/restaurant/bestrest/bestrest.asp?page="+i+"&trec=8630&pt=rt").get();
@@ -65,13 +69,14 @@ public class FoodDataCollection {
 					System.out.println("소개:"+ content.text());
 					
 					Elements etc=doc2.select("div.infoTable ul.tableLR dt");
+					String parking="";
 					for(int k=0;k<etc.size();k++)
 					{
 						try
 						{
 							if(etc.get(k).text().equals("주차"))
 							{
-								String parking=
+								parking=
 									doc2.select("div.infoTable ul.tableLR dd").get(k).text();
 								System.out.println("주차:"+parking);
 							}
@@ -80,12 +85,49 @@ public class FoodDataCollection {
 					
 					Element poster=doc2.selectFirst("div.areaThumbnail img#rest_bigimg");
 					System.out.println("메인이미지:"+poster.attr("src"));
+					/*
+					 *   $('div#id_restphoto_slides').click()
+					 *   
+					 *   div#id_restphoto_slides{
+					 *      background:'white'
+					 *   }
+					 *   
+					 *   String img="a,b,c,b,e,g" 
+					 *   StringTokenizer st=new StringTokenizer(img,",")
+					 *   while(st.hasMoeTokens())
+					 *   {
+					 *     <td><img src="st.nextToken()"></td>
+					 *   }
+					 */
+					Elements images=doc2.select("div#id_restphoto_slides li img");
+					String strImage="";
+					for(int m=0;m<images.size();m++)
+					{
+						//System.out.println(images.get(m).attr("src"));
+						strImage+="https://www.menupan.com"+images.get(m).attr("src")+",";
+					}
+					strImage=strImage.substring(0,strImage.lastIndexOf(","));
 					
-					
+					FoodVO vo=new FoodVO();
+					vo.setName(strName);
+					vo.setType(type.text());
+					vo.setAddress(address.text());
+					vo.setParking(parking);
+					vo.setContent(content.text());
+					vo.setImages(strImage);
+					vo.setPhone(phone.text());
+					vo.setPrice(price.text());
+					vo.setScore(Double.parseDouble(score.text()));
+					vo.setTheme(theme.text());
+					vo.setPoster("https://www.menupan.com"+poster.attr("src"));
+					vo.setTime(time.text());
+					dao.foodInsert(vo);
+					// insert 
 				  }catch(Exception ex) {}
 					
 				}
 			}
+			System.out.println("데이터 수집 완료!!");
 		}catch(Exception ex) {}
 	}
 	public static void main(String[] args) {
