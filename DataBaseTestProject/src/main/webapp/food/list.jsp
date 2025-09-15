@@ -57,6 +57,14 @@ p {
            }
         %>
       </div>
+      <div style="height: 10px"></div>
+      <div class="row text-center">
+        <a href="list.jsp?page=<%=curpage>1?curpage-1:curpage %>"
+           class="btn btn-sm btn-danger">이전</a>
+           <%=curpage %> page / <%=totalpage %> pages
+        <a href="list.jsp?page=<%=curpage<totalpage?curpage+1:curpage %>"
+           class="btn btn-sm btn-danger">다음</a>
+      </div>
     </div>
 </body>
 </html>
