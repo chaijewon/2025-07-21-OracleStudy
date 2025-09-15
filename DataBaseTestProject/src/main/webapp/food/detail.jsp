@@ -1,3 +1,4 @@
+<%@page import="java.util.StringTokenizer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.sist.dao.*,com.sist.vo.*"%>
 <%--
@@ -5,7 +6,7 @@
  --%>
 <%
     String fno=request.getParameter("fno");
-    FoodDAO dao=FoodDAO.newInstance();
+    FoodDAO2 dao=FoodDAO2.newInstance();
     FoodVO vo=dao.foodDetailData(Integer.parseInt(fno));
     
 %>
@@ -28,6 +29,22 @@
 <body>
    <div class="container">
      <div class="row">
+      <table class="table">
+        <tr>
+          <%
+              StringTokenizer st=
+                   new StringTokenizer(vo.getImages(),",");
+              while(st.hasMoreTokens())
+              {
+          %>
+                <td class="text-center">
+                <img src="<%=st.nextToken()%>" style="width:100px;height: 130px">
+                </td>
+          <% 
+              }
+          %>
+        </tr>
+      </table>
       <table class="table">
        <tr>
         <td width=30% class="text-center" rowspan="8">

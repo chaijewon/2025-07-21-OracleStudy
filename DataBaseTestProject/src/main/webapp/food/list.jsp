@@ -8,7 +8,7 @@
        strPage="1";
     int curpage=Integer.parseInt(strPage);
     // DB에서 데이터 받기 
-    FoodDAO dao=FoodDAO.newInstance();
+    FoodDAO2 dao=FoodDAO2.newInstance();
     List<FoodVO> list=dao.foodListData(curpage);
     // 총페이지 받기 
     int totalpage=dao.foodTotalPage();
