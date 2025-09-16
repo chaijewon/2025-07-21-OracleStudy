@@ -21,7 +21,7 @@ import com.sist.dao.*;
 import com.sist.vo.*;
 import java.util.List;
 import java.net.*;
-public class FoodFind extends JPanel implements ActionListener{
+public class FoodFind extends JPanel implements ActionListener,MouseListener{
      JComboBox<String> box;
      JTextField tf;
      JButton btn;
@@ -108,6 +108,7 @@ public class FoodFind extends JPanel implements ActionListener{
     	b1.addActionListener(this);
     	b2.addActionListener(this);
     	// 웹 => 자바스크립트 <a> 
+    	table.addMouseListener(this);
      }
 	 @Override
 	 public void actionPerformed(ActionEvent e) {
@@ -174,6 +175,41 @@ public class FoodFind extends JPanel implements ActionListener{
 		 }
          totalpage=(int)(Math.ceil(count/20.0));
          pageLa.setText(curpage+" page / "+totalpage+" pages");
+	 }
+	 @Override
+	 public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==table)
+		{
+			if(e.getClickCount()==2)
+			{
+				int row=table.getSelectedRow();
+				String fno=model.getValueAt(row, 0).toString();
+				cp.card.show(cp, "FD");
+				cp.fd.print(Integer.parseInt(fno));
+				FoodDetail.type=1;
+			}
+		}
+	 }
+	 @Override
+	 public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	 }
+	 @Override
+	 public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	 }
+	 @Override
+	 public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	 }
+	 @Override
+	 public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	 }
 }
 

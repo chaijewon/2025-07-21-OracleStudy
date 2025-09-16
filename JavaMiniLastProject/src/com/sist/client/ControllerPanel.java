@@ -14,11 +14,12 @@ public class ControllerPanel extends JPanel{
     	ff=new FoodFind(this);
     	fd=new FoodDetail(this);
     	setLayout(card);
-    	add("FD",fd);
+    	
     	add("HF",hf);
     	add("CF",cf);
     	add("BF",bf);
     	add("FF",ff);
+    	add("FD",fd);
     	
     }
 }

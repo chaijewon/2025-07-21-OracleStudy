@@ -1,15 +1,21 @@
 package com.sist.client;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import com.sist.commons.ImageChange;
+import com.sist.dao.FoodDAO;
+import com.sist.vo.FoodVO;
 public class FoodDetail extends JPanel implements ActionListener
 {
     ControllerPanel cp;
     JLabel mainLa;
     JLabel[] las=new JLabel[9];
     JLabel[] lap=new JLabel[9];
-    JTextArea ta; 
+    JTextPane ta; 
     JButton b1,b2,b3;
     static int type=0;
     public FoodDetail(ControllerPanel cp)
@@ -31,7 +37,7 @@ public class FoodDetail extends JPanel implements ActionListener
     		lap[i].setBounds(600, i*35+15,300, 30);
     		add(lap[i]);
     	}
-    	ta=new JTextArea();
+    	ta=new JTextPane();
     	ta.setEnabled(false);
     	JScrollPane js=new JScrollPane(ta);
     	js.setBounds(200, 370, 700, 150);
@@ -55,15 +61,39 @@ public class FoodDetail extends JPanel implements ActionListener
 			if(type==0)
 			{
 			   cp.card.show(cp, "HF");
+			   cp.hf.init();
+			   cp.hf.print();
 			}
 			else
 			{
 				cp.card.show(cp, "FF");
+				cp.ff.print();
 			}
 		}
 	}
 	/*{"업체명","주소","전화","음식종류","영업시간",
 		  "주차","평점","가격대","테마"}*/
+	public void print(int fno)
+	{
+		FoodDAO dao=FoodDAO.newInstance();
+		FoodVO vo=dao.foodDetailData(fno);
+		lap[0].setText(vo.getName());
+		lap[1].setText(vo.getAddress());
+		lap[2].setText(vo.getPhone());
+		lap[3].setText(vo.getType());
+		lap[4].setText(vo.getTime());
+		lap[5].setText(vo.getParking());
+		lap[6].setText(String.valueOf(vo.getScore()));
+		lap[7].setText(vo.getPrice());
+		lap[8].setText(vo.getTheme());
+		ta.setText(vo.getContent());
+		try
+		{
+			URL url=new URL(vo.getPoster());
+			Image img=ImageChange.getImage(new ImageIcon(url), 300, 350);
+			mainLa.setIcon(new ImageIcon(img));
+		}catch(Exception ex) {}
+	}
 	
 	
 }

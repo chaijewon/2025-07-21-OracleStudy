@@ -165,7 +165,9 @@ public class HomeForm extends JPanel implements ActionListener,MouseListener{
 			   String s=imgs[i].getToolTipText();
 			   s=s.substring(0,s.indexOf("."));
 			   FoodDetail.type=0;
-			   JOptionPane.showMessageDialog(this, "선택된 번호:"+s);
+			   //JOptionPane.showMessageDialog(this, "선택된 번호:"+s);
+			   cp.card.show(cp, "FD");
+			   cp.fd.print(Integer.parseInt(s));
 		   }
 	   }
    }
