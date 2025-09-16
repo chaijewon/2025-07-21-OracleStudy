@@ -104,6 +104,10 @@ public class FoodFind extends JPanel implements ActionListener{
     	add(p2);
     	btn.addActionListener(this);
     	tf.addActionListener(this);
+    	
+    	b1.addActionListener(this);
+    	b2.addActionListener(this);
+    	// 웹 => 자바스크립트 <a> 
      }
 	 @Override
 	 public void actionPerformed(ActionEvent e) {
@@ -111,6 +115,22 @@ public class FoodFind extends JPanel implements ActionListener{
 		if(e.getSource()==btn || e.getSource()==tf)
 		{
 			print();
+		}
+		else if(e.getSource()==b1)
+		{
+			if(curpage>1)
+			{
+				curpage--;
+				print();
+			}
+		}
+		else if(e.getSource()==b2)
+		{
+			if(curpage<totalpage)
+			{
+				curpage++;
+				print();
+			}
 		}
 	 }
 	 public void print()
