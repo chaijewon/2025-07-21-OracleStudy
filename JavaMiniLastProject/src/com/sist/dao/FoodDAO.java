@@ -48,7 +48,7 @@ public class FoodDAO {
 			   if(conn!=null) conn.close();
 		   }catch(Exception ex) {}
 	   }
-	   // = 목록 
+	   // = 목록 selectList() selectOne()
 	   public List<FoodVO> foodListData(int page)
 	   {
 		   // 페이징 처리 => 인라인뷰 
@@ -154,7 +154,92 @@ public class FoodDAO {
 		   return list;
 	   }
 	   // = 상세보기 
+	   
 	   // = 검색 
+	   /*
+	    *     INDEX_ASC(테이블명 PK|UK)
+	    *     INDEX_DESC(테이블명 PK|UK)
+	    *     INDEX(테이블명 INDEX명)
+	    *     
+	    *     /*+  , -- : Hint 
+	    *     
+	    *     WHERE name
+	    *     ps.setString(1,name) => 'name' 
+	    */
+	   public List<FoodVO> foodFindData(String column,String fd,int page)
+	   {
+		   List<FoodVO> list=
+				   new ArrayList<FoodVO>();
+		   try
+		   {
+			   // 연결 
+			   getConnection();
+			   String sql="SELECT fno,poster,name,num "
+					     +"FROM (SELECT fno,poster,name,rownum as num "
+					     +"FROM (SELECT /*+ INDEX_ASC(menupan_food menuf_fno_pk)*/fno,poster,name "
+					     +"FROM menupan_food "
+					     +"WHERE "+column+" LIKE '%'||?||'%')) "
+					     +"WHERE num BETWEEN ? AND ?";
+			   // => Mybatis => #{fd} JPA => :fd 
+			   //               ${fd}
+			   // column명 / table명은 ?를 사용하지 않는다 
+			   // ? => 실제 데이터값 첨부시에만 사용 
+			   ps=conn.prepareStatement(sql);
+			   int rowSize=20;
+			   int start=(rowSize*page)-(rowSize-1);
+			   int end=rowSize*page;
+			   
+			   // ?에 값을 채운다 
+			   ps.setString(1, fd);
+			   ps.setInt(2, start);
+			   ps.setInt(3, end);
+			   
+			   ResultSet rs=ps.executeQuery();
+			   while(rs.next())
+			   {
+				   FoodVO vo=new FoodVO();
+				   vo.setFno(rs.getInt(1));
+				   vo.setPoster(rs.getString(2));
+				   vo.setName(rs.getString(3));
+				   list.add(vo);
+			   }
+			   rs.close();
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
+		   return list;
+	   }
+	   // 총페이지 
+	   public int findCount(String column,String fd)
+	   {
+		   int count=0;
+		   try
+		   {
+			   getConnection();
+			   String sql="SELECT COUNT(*) "
+					     +"FROM menupan_food "
+					     +"WHERE "+column+" LIKE '%'||?||'%'";
+			   ps=conn.prepareStatement(sql);
+			   ps.setString(1, fd);
+			   ResultSet rs=ps.executeQuery();
+			   rs.next();
+			   count=rs.getInt(1);
+			   rs.close();
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
+		   return count;
+	   }
 	   
 }
 
