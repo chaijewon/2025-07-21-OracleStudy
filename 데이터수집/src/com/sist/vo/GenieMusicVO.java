@@ -1,4 +1,7 @@
 package com.sist.vo;
+
+import lombok.Data;
+
 /*
  *   NO                                        NOT NULL NUMBER
 	 CNO                                                NUMBER
@@ -13,6 +16,8 @@ package com.sist.vo;
 	 HIT                                                NUMBER
 	 LIKECOUNT                                          NUMBER
  */
+@Data
 public class GenieMusicVO {
-
+    private int no,cno,hit,rank,likecount,idcrement;
+    private String title,singer,album,poster,state,key;
 }
