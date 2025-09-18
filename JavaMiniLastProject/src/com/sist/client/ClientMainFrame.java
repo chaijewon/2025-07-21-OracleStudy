@@ -118,6 +118,47 @@ implements ActionListener
 		{
 			cp.card.show(cp, "BF");
 		}
+		else if(e.getSource()==login.b1)
+		{
+			String id=login.tf.getText();
+			if(id.trim().length()<1)
+			{
+				login.tf.requestFocus();
+				return;
+			}
+			String pwd=new String(login.pf.getPassword());
+			if(pwd.trim().length()<1)
+			{
+				login.pf.requestFocus();
+				return;
+			}
+			
+			MemberDAO dao=MemberDAO.newInstance();
+			MemberVO vo=dao.isLogin(id, pwd);
+			
+			if(vo.getMsg().equals("NOID"))
+			{
+				JOptionPane.showMessageDialog(this, 
+						"아이디가 존재하지 않습니다");
+				login.tf.setText("");
+				login.pf.setText("");
+				login.tf.requestFocus();
+			}
+			else if(vo.getMsg().equals("NOPWD"))
+			{
+				JOptionPane.showMessageDialog(this, 
+						"비밀번호가 틀립니다");
+				login.pf.setText("");
+				login.pf.requestFocus();
+			}
+			else
+			{
+				login.setVisible(false);
+				setVisible(true);
+				setTitle(vo.getName());
+			}
+			
+		}
 		else if(e.getSource()==login.b2)
 		{
 			login.setVisible(false);
@@ -125,10 +166,10 @@ implements ActionListener
 		}
 		else if(e.getSource()==login.b3)
 		{
-			//dispose();
-			//System.exit(0);
-			setVisible(true);
-			login.setVisible(false);
+			dispose();
+			System.exit(0);
+			//setVisible(true);
+			//login.setVisible(false);
 		}
 		else if(e.getSource()==join.b3)
 		{
@@ -190,8 +231,8 @@ implements ActionListener
 		}
 		else if(e.getSource()==join.b2)
 		{
-			dispose();
-			System.exit(0);
+			login.setVisible(true);
+			join.setVisible(false);
 		}
 		else if(e.getSource()==join.b4)
 		{
