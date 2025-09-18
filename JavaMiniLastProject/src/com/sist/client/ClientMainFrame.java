@@ -2,6 +2,7 @@ package com.sist.client;
 import javax.swing.*;
 
 import com.sist.dao.MemberDAO;
+import com.sist.vo.MemberVO;
 import com.sist.vo.ZipcodeVO;
 
 import java.awt.*; // 배치 => 레이아웃 
@@ -70,8 +71,19 @@ implements ActionListener
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				super.mouseClicked(e);
+				if(e.getSource()==post.table)
+				{
+					if(e.getClickCount()==2)
+					{
+						int row=post.table.getSelectedRow();
+						String zip=post.model.getValueAt(row,0).toString();
+						String addr=post.model.getValueAt(row,1).toString();
+						
+						join.tf3.setText(zip);
+						join.tf4.setText(addr);
+						post.setVisible(false);
+					}
+				}
 			}
 		    
     	});
@@ -126,12 +138,60 @@ implements ActionListener
 		}
 		else if(e.getSource()==join.b1)
 		{
+			String id=join.tf1.getText();
+			if(id.trim().length()<1)
+			{
+				JOptionPane.showMessageDialog(this, 
+						"중복체크를 하세요");
+				return;
+			}
+			String pwd=String.valueOf(join.pf.getPassword());
+			String name=join.tf2.getText();
+			String sex="";
+			if(join.rb1.isSelected())
+			{
+				sex="남자";
+			}
+			else
+			{
+				sex="여자";
+			}
+			String zip=join.tf3.getText();
+			String addr1=join.tf4.getText();
+			String addr2=join.tf5.getText();
+			String phone=join.tf6.getText();
+			String content=join.ta.getText();
 			
+			MemberVO vo=new MemberVO();
+			vo.setId(id);
+			vo.setAddr1(addr1);
+			vo.setAddr2(addr2);
+			vo.setContent(content);
+			vo.setPhone(phone);
+			vo.setPwd(pwd);
+			vo.setPost(zip);
+			vo.setSex(sex);
+			vo.setName(name);
+			
+			MemberDAO dao=MemberDAO.newInstance();
+			int res=dao.memberJoin(vo);
+			if(res==0)
+			{
+				JOptionPane.showMessageDialog(this, 
+						"회원가입에 실패하셨습니다");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(this, 
+						"회원가입을 축하합니다");
+				join.setVisible(false);
+				login.setVisible(true);
+			}
 		}
 		else if(e.getSource()==join.b2)
 		{
-			login.setVisible(true);
-			join.setVisible(false);
+			dispose();
+			System.exit(0);
 		}
 		else if(e.getSource()==join.b4)
 		{

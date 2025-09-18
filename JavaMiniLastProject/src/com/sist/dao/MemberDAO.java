@@ -244,13 +244,14 @@ public class MemberDAO {
 		CONTENT          CLOB          
 		REGDATE          DATE 
     */
-   public void memberJoin(MemberVO vo)
+   public int memberJoin(MemberVO vo)
    {
+	   int res=0;
 	   try
 	   {
 		   getConnection();
 		   String sql="INSERT INTO project_member "
-				     +"VALUES(?,?,?,?,?,?,?,?,?,SYSDATE)";
+				     +"VALUES(?,?,?,?,?,?,?,?,SYSDATE,'n')";
 		   ps=conn.prepareStatement(sql);
 		   //?에 값을 채운다 
 		   ps.setString(1, vo.getId());
@@ -262,8 +263,8 @@ public class MemberDAO {
 		   ps.setString(6, vo.getAddr1());
 		   ps.setString(7, vo.getAddr2());
 		   ps.setString(8, vo.getPhone());
-		   ps.setString(9, vo.getContent());
-		   ps.executeUpdate();
+		   
+		   res=ps.executeUpdate();
 	   }catch(Exception ex)
 	   {
 		   ex.printStackTrace();
@@ -272,6 +273,8 @@ public class MemberDAO {
 	   {
 		   disConnection();
 	   }
+	   
+	   return res;
    }
    // 옵션 6. ID찾기 / 비밀번호 찾기  
    
