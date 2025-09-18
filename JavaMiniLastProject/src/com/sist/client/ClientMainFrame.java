@@ -9,6 +9,7 @@ implements ActionListener
 	ControllerPanel cp=new ControllerPanel();
 	Login login=new Login();
 	Join join=new Join();
+	IdCheck ic=new IdCheck();
 	JMenuItem genie;
 	JMenuItem melon;
 	JMenuItem user;
@@ -44,7 +45,9 @@ implements ActionListener
     	login.b3.addActionListener(this); // 취소
     	
     	join.b1.addActionListener(this); // 회원가입 
-    	join.b2.addActionListener(this); // 취소 
+    	join.b2.addActionListener(this); // 취소
+    	join.b3.addActionListener(this);// 아이디 체크
+    	
     	
     	genie.addActionListener(this);
     	
@@ -91,6 +94,12 @@ implements ActionListener
 			//System.exit(0);
 			setVisible(true);
 			login.setVisible(false);
+		}
+		else if(e.getSource()==join.b3)
+		{
+			ic.tf.setText("");
+			ic.rla.setText("");
+			ic.setVisible(true);
 		}
 		else if(e.getSource()==join.b1)
 		{

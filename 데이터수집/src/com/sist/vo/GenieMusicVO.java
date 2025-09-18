@@ -21,3 +21,4 @@ public class GenieMusicVO {
     private int no,cno,hit,rank,likecount,idcrement;
     private String title,singer,album,poster,state,key;
 }
+
