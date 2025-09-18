@@ -1,5 +1,8 @@
 package com.sist.client;
 import javax.swing.*;
+
+import com.sist.dao.MemberDAO;
+
 import java.awt.*; // 배치 => 레이아웃 
 import java.awt.event.*; // 이벤트 처리 
 public class ClientMainFrame extends JFrame
@@ -51,6 +54,9 @@ implements ActionListener
     	
     	genie.addActionListener(this);
     	
+    	// 아이디 체크 
+    	ic.ok.addActionListener(this);
+    	ic.check.addActionListener(this);
     	// textfield / button / menuitem => ActionListener
     	// table / label / image / panel => MouseListener
     }
@@ -113,6 +119,39 @@ implements ActionListener
 		else if(e.getSource()==genie)
 		{
 			cp.card.show(cp, "GM");
+		}
+		// 아이디 체크
+		else if(e.getSource()==ic.check)
+		{
+			String id=ic.tf.getText();
+			// request.getParameter()
+			if(id.trim().length()<1)
+			{
+				JOptionPane.showMessageDialog(this, "아이디 입력!!");
+				// alert()
+				ic.tf.requestFocus();
+				return;
+			}
+			MemberDAO dao=MemberDAO.newInstance();
+			int count=dao.memberIdCheck(id.trim());
+			if(count==0) // id가 없는 상태 
+			{
+				ic.rla.setBackground(Color.blue);
+				ic.rla.setText(id+"는(은) 사용 가능한 아이디입니다");
+				ic.ok.setVisible(true);
+			}
+			else // id가 있는 상태 
+			{
+				ic.rla.setBackground(Color.red);
+				ic.rla.setText(id+"는(은) 이미 사용중인 아이디입니다");
+			}
+		}
+		// 결과 
+		else if(e.getSource()==ic.ok)
+		{
+			String id=ic.tf.getText();
+			join.tf1.setText(id);
+			ic.setVisible(false);
 		}
 	}
 	
