@@ -189,6 +189,7 @@ public class MemberDAO {
 		   ps.setString(1, dong);
 		   // 결과값 받기 
 		   ResultSet rs=ps.executeQuery();
+		   rs.next();
 		   count=rs.getInt(1);
 		   rs.close();
 	   }catch(Exception ex)

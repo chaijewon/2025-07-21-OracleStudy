@@ -2,9 +2,11 @@ package com.sist.client;
 import javax.swing.*;
 
 import com.sist.dao.MemberDAO;
+import com.sist.vo.ZipcodeVO;
 
 import java.awt.*; // 배치 => 레이아웃 
 import java.awt.event.*; // 이벤트 처리 
+import java.util.List;
 public class ClientMainFrame extends JFrame
 implements ActionListener
 {
@@ -13,6 +15,7 @@ implements ActionListener
 	Login login=new Login();
 	Join join=new Join();
 	IdCheck ic=new IdCheck();
+	PostFind post=new PostFind();
 	JMenuItem genie;
 	JMenuItem melon;
 	JMenuItem user;
@@ -50,7 +53,7 @@ implements ActionListener
     	join.b1.addActionListener(this); // 회원가입 
     	join.b2.addActionListener(this); // 취소
     	join.b3.addActionListener(this);// 아이디 체크
-    	
+    	join.b4.addActionListener(this);// 우편번호 검색
     	
     	genie.addActionListener(this);
     	
@@ -59,6 +62,20 @@ implements ActionListener
     	ic.check.addActionListener(this);
     	// textfield / button / menuitem => ActionListener
     	// table / label / image / panel => MouseListener
+    	
+    	post.btn.addActionListener(this);
+    	post.tf.addActionListener(this);
+    	
+    	post.table.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				super.mouseClicked(e);
+			}
+		    
+    	});
+    	
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -116,6 +133,15 @@ implements ActionListener
 			login.setVisible(true);
 			join.setVisible(false);
 		}
+		else if(e.getSource()==join.b4)
+		{
+			for(int i=post.model.getRowCount()-1;i>=0;i--)
+			{
+				post.model.removeRow(i);
+			}
+			post.tf.setText("");
+			post.setVisible(true);
+		}
 		else if(e.getSource()==genie)
 		{
 			cp.card.show(cp, "GM");
@@ -152,6 +178,34 @@ implements ActionListener
 			String id=ic.tf.getText();
 			join.tf1.setText(id);
 			ic.setVisible(false);
+		}
+		// 우편번호 검색 
+		else if(e.getSource()==post.btn||e.getSource()==post.tf)
+		{
+			String fd=post.tf.getText();
+			if(fd.trim().length()<1)
+			{
+				post.tf.requestFocus();
+				return;
+			}
+			
+			MemberDAO dao=MemberDAO.newInstance();
+			int count=dao.postFindCount(fd);
+			if(count==0)
+			{
+				JOptionPane.showMessageDialog(this, "검색결과가 없습니다");
+				post.tf.setText("");
+				post.tf.requestFocus();
+			}
+			else
+			{
+				List<ZipcodeVO> list=dao.postFind(fd);
+				for(ZipcodeVO vo:list)
+				{
+					String[] data= {vo.getZipcode(),vo.getAddress()};
+					post.model.addRow(data);
+				}
+			}
 		}
 	}
 	
