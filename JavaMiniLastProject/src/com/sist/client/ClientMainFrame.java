@@ -155,7 +155,7 @@ implements ActionListener
 			{
 				login.setVisible(false);
 				setVisible(true);
-				setTitle(vo.getName());
+				setTitle(id);
 			}
 			
 		}

@@ -8,6 +8,7 @@ public class ControllerPanel extends JPanel{
     FoodFind ff;
     FoodDetail fd;
     GenieMusic gm;
+    MyPageForm mf;
     CardLayout card=new CardLayout();
     public ControllerPanel()
     {
@@ -15,6 +16,7 @@ public class ControllerPanel extends JPanel{
     	ff=new FoodFind(this);
     	fd=new FoodDetail(this);
     	gm=new GenieMusic(this);
+    	mf=new MyPageForm(this);
     	setLayout(card);
     	
     	add("HF",hf);
@@ -23,5 +25,6 @@ public class ControllerPanel extends JPanel{
     	add("FF",ff);
     	add("FD",fd);
     	add("GM",gm);
+    	add("MF",mf);
     }
 }
