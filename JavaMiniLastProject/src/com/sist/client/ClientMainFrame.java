@@ -46,6 +46,7 @@ implements ActionListener
     	menu.b5.addActionListener(this);
     	menu.b6.addActionListener(this);
     	menu.b3.addActionListener(this);
+    	menu.b2.addActionListener(this);
     	
     	login.b1.addActionListener(this); // 로그인 
     	login.b2.addActionListener(this); // 회원가입 
@@ -106,6 +107,11 @@ implements ActionListener
 		{
 			cp.card.show(cp, "HF");
 		}
+		else if(e.getSource()==menu.b2)
+		{
+			cp.card.show(cp, "MF");
+			cp.mf.print();
+		}
 		else if(e.getSource()==menu.b3)
 		{
 			cp.card.show(cp, "FF");
@@ -155,7 +161,8 @@ implements ActionListener
 			{
 				login.setVisible(false);
 				setVisible(true);
-				setTitle(id);
+				setTitle(vo.getName());
+				cp.myId=id;
 			}
 			
 		}

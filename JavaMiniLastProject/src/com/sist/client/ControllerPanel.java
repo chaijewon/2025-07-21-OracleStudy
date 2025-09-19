@@ -10,8 +10,10 @@ public class ControllerPanel extends JPanel{
     GenieMusic gm;
     MyPageForm mf;
     CardLayout card=new CardLayout();
+    String myId;
     public ControllerPanel()
     {
+    	
     	hf=new HomeForm(this);
     	ff=new FoodFind(this);
     	fd=new FoodDetail(this);
