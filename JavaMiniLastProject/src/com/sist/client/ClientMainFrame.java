@@ -48,6 +48,7 @@ implements ActionListener
     	menu.b3.addActionListener(this);
     	menu.b2.addActionListener(this);
     	menu.b7.addActionListener(this);
+    	menu.b4.addActionListener(this);
     	
     	login.b1.addActionListener(this); // 로그인 
     	login.b2.addActionListener(this); // 회원가입 
@@ -116,6 +117,10 @@ implements ActionListener
 		else if(e.getSource()==menu.b3)
 		{
 			cp.card.show(cp, "FF");
+		}
+		else if(e.getSource()==menu.b4)
+		{
+			cp.card.show(cp, "KK");
 		}
 		else if(e.getSource()==menu.b5)
 		{

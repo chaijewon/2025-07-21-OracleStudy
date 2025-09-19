@@ -10,6 +10,7 @@ public class ControllerPanel extends JPanel{
     GenieMusic gm;
     MyPageForm mf;
     NaverNewsFind nn;
+    KioskForm kk;
     CardLayout card=new CardLayout();
     String myId;
     public ControllerPanel()
@@ -21,6 +22,7 @@ public class ControllerPanel extends JPanel{
     	gm=new GenieMusic(this);
     	mf=new MyPageForm(this);
     	nn=new NaverNewsFind(this);
+    	kk=new KioskForm(this);
     	setLayout(card);
     	
     	add("HF",hf);
@@ -31,5 +33,6 @@ public class ControllerPanel extends JPanel{
     	add("GM",gm);
     	add("MF",mf);
     	add("NN",nn);
+    	add("KK",kk);
     }
 }
