@@ -44,6 +44,31 @@ public class MyPageForm extends JPanel{
    	    add(la1);
    	    js.setBounds(300, 55, 450, 300);
    	    add(js);
+   	    
+   	    table.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getSource()==table)
+				{
+					if(e.getClickCount()==2)
+					{
+						int row=table.getSelectedRow();
+						String jno=model.getValueAt(row, 0).toString();
+						FoodDAO dao=FoodDAO.newInstance();
+						int res=JOptionPane.showConfirmDialog(cp, "삭제","삭제할까요?",
+								JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+						if(res==JOptionPane.YES_OPTION)
+						{
+							dao.jjimCancel(Integer.parseInt(jno));
+							print();
+						}
+					}
+				}
+			}
+		      
+   	    });
     	
     }
     public void print()
