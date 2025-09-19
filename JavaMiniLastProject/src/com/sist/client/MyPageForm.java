@@ -57,7 +57,7 @@ public class MyPageForm extends JPanel{
 						int row=table.getSelectedRow();
 						String jno=model.getValueAt(row, 0).toString();
 						FoodDAO dao=FoodDAO.newInstance();
-						int res=JOptionPane.showConfirmDialog(cp, "삭제","삭제할까요?",
+						int res=JOptionPane.showConfirmDialog(cp, "삭제할까요?","삭제",
 								JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 						if(res==JOptionPane.YES_OPTION)
 						{
